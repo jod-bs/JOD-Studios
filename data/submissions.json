@@ -1,0 +1,41 @@
+[
+  {
+    "id": "proj_demo_01",
+    "service": "SFX & Music",
+    "description": "Need cinematic sound design, foley and atmospheric score for a 15-minute sci-fi short film.",
+    "timeline": "1-2 weeks",
+    "budget": "₹1,50,000 - ₹2,50,000",
+    "name": "Aarav Sharma",
+    "email": "aarav@cineverse.studio",
+    "phone": "+91 98765 43210",
+    "status": "new",
+    "createdAt": "2026-09-17T00:25:41.715Z",
+    "notes": "Client mentioned they have raw cuts ready for sync."
+  },
+  {
+    "id": "proj_demo_02",
+    "service": "VFX",
+    "description": "Commercial brand film requiring 3D logo disintegration and cybernetic glow pass on 12 shots.",
+    "timeline": "Urgent",
+    "budget": "₹3,00,000+",
+    "name": "Priya Nair",
+    "email": "priya@lumina-agency.com",
+    "phone": "+91 98111 22334",
+    "status": "contacted",
+    "createdAt": "2026-09-16T05:25:41.715Z",
+    "notes": "Followed up via WhatsApp. Awaiting storyboard."
+  },
+  {
+    "id": "proj_demo_03",
+    "service": "Video Edit",
+    "description": "Feature documentary rough cut editing and colour grade for a 45-minute cut.",
+    "timeline": "1 month",
+    "budget": "2,00,000 - 3,50,000",
+    "name": "Rohan Deshmukh",
+    "email": "rohan@motionbox.in",
+    "phone": "+91 99887 76655",
+    "status": "in_review",
+    "createdAt": "2026-09-17T05:26:11.583Z",
+    "notes": "Scheduled initial review call for Friday 3PM."
+  }
+]
