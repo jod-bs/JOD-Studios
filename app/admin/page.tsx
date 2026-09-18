@@ -122,8 +122,22 @@ export default function AdminPortal() {
     }
   };
 
+  const filteredSubmissions = submissions.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.phone.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesStatus = statusFilter === "all" || item.status === statusFilter;
+    const matchesService = serviceFilter === "all" || item.service === serviceFilter;
+
+    return matchesSearch && matchesStatus && matchesService;
+  });
+
   const exportToCSV = () => {
-    if (submissions.length === 0) return;
+    if (filteredSubmissions.length === 0) return;
     const escapeCsv = (value: string) => `"${String(value).replace(/"/g, '""')}"`;
     const headers = [
       "ID",
@@ -138,7 +152,7 @@ export default function AdminPortal() {
       "Description",
       "Admin Notes",
     ];
-    const rows = submissions.map((s) => [
+    const rows = filteredSubmissions.map((s) => [
       escapeCsv(s.id),
       escapeCsv(s.service),
       escapeCsv(s.name),
@@ -164,20 +178,6 @@ export default function AdminPortal() {
     URL.revokeObjectURL(url);
   };
 
-  const filteredSubmissions = submissions.filter((item) => {
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.phone.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const matchesStatus = statusFilter === "all" || item.status === statusFilter;
-    const matchesService = serviceFilter === "all" || item.service === serviceFilter;
-
-    return matchesSearch && matchesStatus && matchesService;
-  });
-
   const totalCount = submissions.length;
   const newCount = submissions.filter((s) => s.status === "new").length;
   const inReviewCount = submissions.filter((s) => s.status === "in_review").length;
@@ -196,7 +196,7 @@ export default function AdminPortal() {
           <button onClick={fetchSubmissions} className="admin-btn-outline" title="Refresh Inquiries">
             Refresh
           </button>
-          <button onClick={exportToCSV} className="admin-btn-outline" title="Export as CSV">
+          <button onClick={exportToCSV} className="admin-btn-outline" title="Export filtered inquiries as CSV">
             Export CSV
           </button>
           <Link href="/" className="admin-btn-accent">
@@ -389,6 +389,8 @@ export default function AdminPortal() {
                   X
                 </button>
               </div>
+
+              {error && <div className="admin-alert-error admin-panel-alert">{error}</div>}
 
               <div className="detail-body">
                 <div className="detail-section">

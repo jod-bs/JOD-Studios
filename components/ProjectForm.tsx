@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { whatsappUrl } from "@/lib/site";
 
 const steps = ["Services needed", "Project description", "Timeline", "Budget", "Your details"];
 const services = ["Dubbing", "SFX & Music", "Audio Mix", "Video Edit", "VFX", "Animation"];
 const timelines = ["Urgent", "1-2 weeks", "1 month", "Flexible"];
 
-// Validation regular expressions
-const NAME_REGEX = /^[a-zA-Z\s.'-]{2,60}$/;
+const NAME_REGEX = /^[\p{L}\s.'-]{2,60}$/u;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const HAS_LETTERS_REGEX = /[a-zA-Z]/;
+const HAS_LETTERS_REGEX = /\p{L}/u;
 const HAS_DIGITS_REGEX = /[0-9]/;
 
 export default function ProjectForm() {
@@ -34,15 +34,15 @@ export default function ProjectForm() {
 
   // Input Sanitizers
   const handleNameChange = (val: string) => {
-    // Strip numbers and disallow digits completely
-    const sanitized = val.replace(/[0-9]/g, "").replace(/[^a-zA-Z\s.'-]/g, "");
+    // Allow Unicode letters; strip digits and disallowed symbols
+    const sanitized = val.replace(/[0-9]/g, "").replace(/[^\p{L}\s.'-]/gu, "");
     setName(sanitized);
     if (errorMessage) setErrorMessage("");
   };
 
   const handleBudgetChange = (val: string) => {
-    // Strip alphabetic text - allow only numbers, commas, periods, hyphens, and currency symbols
-    const sanitized = val.replace(/[a-zA-Z]/g, "").replace(/[^0-9\s,.-₹$€£]/g, "");
+    // Strip letters - allow numbers, commas, periods, hyphens, and currency symbols
+    const sanitized = val.replace(/\p{L}/gu, "").replace(/[^0-9\s,.-₹$€£]/g, "");
     setBudget(sanitized);
     if (errorMessage) setErrorMessage("");
   };
@@ -232,7 +232,7 @@ export default function ProjectForm() {
         </p>
         <div className="success-actions">
           <a
-            href={`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`}
+            href={whatsappUrl(whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
             className="button"
