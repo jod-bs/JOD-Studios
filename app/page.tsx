@@ -2,6 +2,7 @@ import ProjectForm from "../components/ProjectForm";
 import StudioConsole from "../components/StudioConsole";
 import AmbientField from "../components/AmbientField";
 import SiteHeader from "../components/SiteHeader";
+import OurWorks from "../components/OurWorks";
 import Link from "next/link";
 import { whatsappUrl } from "../lib/site";
 
@@ -53,44 +54,7 @@ export default function Home() {
             </p>
           </div>
         </section>
-        <section id="work" className="work" style={{ position: "relative", overflow: "hidden" }}>
-          <AmbientField variant="film" />
-          <div className="shell" style={layer}>
-            <div className="section-top">
-              <p className="kicker">Selected work</p>
-              <p className="index">01 — 02</p>
-            </div>
-            <div className="film-strip">
-              <article className="film-card large">
-                <img
-                  src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1400&q=80"
-                  alt="Recording microphone in a sound studio"
-                />
-                <div>
-                  <small>SONIC IDENTITY</small>
-                  <h3>
-                    Sound that gives images
-                    <br />a pulse.
-                  </h3>
-                </div>
-              </article>
-              <article className="film-card">
-                <img
-                  src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1000&q=80"
-                  alt="Cinematic visual effects light scene"
-                />
-                <div>
-                  <small>VFX / FINISH</small>
-                  <h3>
-                    Believable
-                    <br />
-                    impossible.
-                  </h3>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+        <OurWorks />
         <section id="rooms" className="rooms" style={{ position: "relative", overflow: "hidden" }}>
           <AmbientField variant="wave" />
           <div className="shell" style={layer}>
