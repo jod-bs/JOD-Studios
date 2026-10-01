@@ -3,12 +3,43 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+const links = [
+  { id: "hero", label: "Hero" },
+  { id: "about", label: "About" },
+  { id: "services", label: "Our Services" },
+  { id: "clients", label: "Our Clients" },
+  { id: "testimonials", label: "Testimonials" },
+  { id: "start", label: "Start a Project" },
+];
+
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("hero");
+
+  useEffect(() => {
+    const nodes = links
+      .map((link) => document.getElementById(link.id))
+      .filter((node): node is HTMLElement => Boolean(node));
+    if (!nodes.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const next = visible[0]?.target.id;
+        if (next) setActive(next);
+      },
+      { rootMargin: "-20% 0px -55% 0px", threshold: [0.15, 0.35, 0.6] },
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth > 760) setOpen(false);
+      if (window.innerWidth > 980) setOpen(false);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -24,52 +55,45 @@ export default function SiteHeader() {
   const close = () => setOpen(false);
 
   return (
-    <header className="shell nav">
-      <a className="wordmark" href="#top" onClick={close}>
-        JOD <em>STUDIOS</em>
-      </a>
-
-      <nav className="nav-desktop" aria-label="Primary">
-        <a href="#work">Work</a>
-        <a href="#rooms">Rooms</a>
-        <a href="#start">Start a project</a>
-        <Link href="/admin" className="admin-nav-link">
-          Admin Portal
-        </Link>
-      </nav>
-
-      <div className="nav-actions">
+    <header className="spa-nav">
+      <div className="spa-nav-bar">
+        <a className="spa-brand" href="#hero" onClick={close}>
+          JOD <em>Studios</em>
+        </a>
+        <nav className="spa-links" aria-label="Primary">
+          {links.map((link) => (
+            <a key={link.id} href={`#${link.id}`} className={active === link.id ? "is-active" : ""}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
         <button
           type="button"
-          className={`nav-toggle ${open ? "open" : ""}`}
+          className={`spa-burger${open ? " is-open" : ""}`}
           aria-expanded={open}
-          aria-controls="mobile-nav"
+          aria-controls="spa-drawer"
           aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen((value) => !value)}
         >
           <span />
           <span />
-          <span />
         </button>
-        <a className="circle-link" href="#start" aria-label="Start a project" onClick={close}>
-          ↗
-        </a>
       </div>
-
-      <div id="mobile-nav" className={`mobile-nav ${open ? "open" : ""}`} hidden={!open}>
-        <a href="#work" onClick={close}>
-          Work
-        </a>
-        <a href="#rooms" onClick={close}>
-          Rooms
-        </a>
-        <a href="#start" onClick={close}>
-          Start a project
-        </a>
-        <Link href="/admin" className="admin-nav-link" onClick={close}>
-          Admin Portal
+      <nav id="spa-drawer" className={`spa-drawer${open ? " is-open" : ""}`} hidden={!open} aria-label="Mobile">
+        {links.map((link) => (
+          <a
+            key={link.id}
+            href={`#${link.id}`}
+            className={active === link.id ? "is-active" : ""}
+            onClick={close}
+          >
+            {link.label}
+          </a>
+        ))}
+        <Link href="/admin" onClick={close}>
+          Admin
         </Link>
-      </div>
+      </nav>
     </header>
   );
 }
