@@ -1,6 +1,7 @@
 import ProjectForm from "../components/ProjectForm";
-import StudioConsole from "../components/StudioConsole";
 import AmbientField from "../components/AmbientField";
+import { Scene } from "../components/HeroField";
+import { ServicesField } from "../components/ServicesField";
 import SiteHeader from "../components/SiteHeader";
 import ClientMarquee from "../components/ClientMarquee";
 import Reveal from "../components/Reveal";
@@ -40,22 +41,18 @@ const services = [
   },
 ] as const;
 
-const strengths = [
-  { title: "One roof", copy: "Dialogue, music, picture and motion finish in the same room." },
-  { title: "One point of view", copy: "A single editorial ear across every version the story needs." },
-  { title: "Every screen", copy: "Prepared for theatre, streaming, ads and the cut that comes next." },
-];
-
 const clients = [
-  { name: "Northframe", mark: "NF" },
-  { name: "Lumen Room", mark: "LR" },
-  { name: "Harbor Docs", mark: "HD" },
-  { name: "Kinetic Ads", mark: "KA" },
-  { name: "Velvet Series", mark: "VS" },
-  { name: "Orbit Games", mark: "OG" },
-  { name: "Paper Shorts", mark: "PS" },
-  { name: "Field Music", mark: "FM" },
-];
+  { name: "Abirami media works", mark: "NF", logo: "/clients/Abirami.webp" },
+  { name: "Accenture", mark: "LR", logo: "/clients/Accenture.webp" },
+  { name: "L&T", mark: "HD", logo: "/clients/L & T  values.webp" },
+  { name: "ZEE5", mark: "KA", logo: "/clients/Zee 5.webp" },
+  { name: "Times Of India", mark: "OG", logo: "/clients/Times Of India.webp" },
+  { name: "Kuviyam media works", mark: "VS", logo: "/clients/Kuviyam media works.webp" },
+  { name: "ANC jewellery", mark: "OG", logo: "/clients/ANC Jewellery.webp" },
+  { name: "Cocoplaynut", mark: "PS", logo: "/clients/Cocoplaynut.webp" },
+  { name: "Inner wheel", mark: "FM", logo: "/clients/Inner Wheel.webp" },
+  { name: "Rotary", mark: "RT", logo: "/clients/Rotary.webp" }
+]; 
 
 const quotes = [
   {
@@ -112,7 +109,7 @@ export default function Home() {
       <SiteHeader />
       <main>
         <section id="hero" className="spa-hero" aria-labelledby="hero-title">
-          <AmbientField variant="nebula" />
+          <Scene />
           <div className="spa-wrap spa-hero-grid">
             <div className="spa-hero-copy">
               <p className="spa-kicker">Independent post-production · India</p>
@@ -134,7 +131,6 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <StudioConsole />
           </div>
         </section>
 
@@ -152,31 +148,11 @@ export default function Home() {
                 animate so the story can hold a room.
               </p>
             </Reveal>
-            <Reveal delay={80} className="spa-pillars">
-              <article>
-                <h3>Mission</h3>
-                <p>Give every picture a precise, emotional finish — sound and image in agreement.</p>
-              </article>
-              <article>
-                <h3>Vision</h3>
-                <p>A studio where language, music and motion are one practice, not three vendors.</p>
-              </article>
-            </Reveal>
-          </div>
-          <div className="spa-wrap spa-strengths">
-            {strengths.map((item, index) => (
-              <Reveal key={item.title} delay={index * 70}>
-                <article>
-                  <span>0{index + 1}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.copy}</p>
-                </article>
-              </Reveal>
-            ))}
           </div>
         </section>
 
-        <section id="services" className="spa-section" aria-labelledby="services-title">
+        <section id="services" className="spa-section spa-services" aria-labelledby="services-title">
+          <ServicesField />
           <div className="spa-wrap">
             <Reveal className="spa-center">
               <p className="spa-kicker">Our services</p>
